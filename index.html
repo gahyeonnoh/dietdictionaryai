@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+			crossorigin="anonymous"
+		/>
+		
+		
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f4cc1eebbb9a26e"></script>
+
+		<title>Hello, world!</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<link rel="stylesheet" href="style.css" />
+
+	<title></title>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script
+		src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"
+	></script>
+	<script>
+		window.onload = function () {
+			document.getElementById('button').onclick = function () {
+				var h = parseFloat(document.getElementById('height').value);
+				var w = parseFloat(document.getElementById('weight').value);
+				var bmi = document.getElementById('bmi');
+				bmi.innerHTML = ((h - 100) * 30).toFixed(1);
+			};
+		};
+	</script>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light nav-distance">
+			<a class="navbar-brand" href="#">다이어트 사전</a>
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbarNav"
+				aria-controls="navbarNav"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#"></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#"></a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link disabled"
+							href="#"
+							tabindex="-1"
+							aria-disabled="true"
+						></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<section class="section">
+			<h1 class="title">인공지능으로 똑똑한 다이어트 하기</h1>
+			<h2 class="subtitle">
+				내가 먹은 음식의 칼로리로 하루 권장 칼로리를 계산하고 운동정보를 받아보자!
+			</h2>
+		</section>
+		<p>키 : <input type="number" id="height" /> m</p>
+		<p>몸무게 : <input type="number" id="weight" /> kg</p>
+		<select id="sel">
+			<option value="매우 활동적">매우 활동적</option>
+			<option value="활동적">활동적</option>
+			<option value="낮은 활동적">낮은 활동적</option>
+		</select>
+		<hr width="5" />
+		<p>1일 권장 칼로리 : <output id="bmi"></output> kcal</p>
+		<input type="button" id="button" value="계산" />
+		<br />
+		<br />
+		<br />
+		<div>다이어트 사전</div>
+
+		<button type="button" onclick="predict()">Run</button>
+		<script
+			class="jsbin"
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+		></script>
+		<div class="file-upload">
+			<div class="image-upload-wrap">
+				<input
+					class="file-upload-input"
+					type="file"
+					onchange="readURL(this);"
+					accept="image/*"
+				/>
+				<div class="drag-text">
+					<h3>음식 사진을 업로드 해주세요</h3>
+				</div>
+			</div>
+			<div class="file-upload-content">
+				<img class="file-upload-image" id="food-image" src="#" alt="your image" />
+				<!-- <p class="result-message">
+					
+				</p>  -->
+				<!-- 숨겨야하는 부분 -->
+				<div id="label-container"></div>
+				<!-- 여기까지 숨거야하는부분 -->
+				<div class="image-title-wrap">
+					<button type="button" onclick="removeUpload()" class="remove-image">
+						Remove <span class="image-title">Uploaded Image</span>
+					</button>
+					
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+            
+				</div>
+			</div>
+		</div>
+		<div id="webcam-container"></div>
+
+		<!-- 여기부터는 댓글 구현 -->
+		<div id="disqus_thread"></div>
+		<script>
+			/**
+			 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+			 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+			/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+			(function () {
+				// DON'T EDIT BELOW THIS LINE
+				var d = document,
+					s = d.createElement('script');
+				s.src = 'https://dietdictionary.disqus.com/embed.js';
+				s.setAttribute('data-timestamp', +new Date());
+				(d.head || d.body).appendChild(s);
+			})();
+		</script>
+		<noscript
+			>Please enable JavaScript to view the
+			<a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript
+		>
+
+		<!-- 여기까지 댓글 구현 -->
+
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+		<script>
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function (e) {
+						$('.image-upload-wrap').hide();
+
+						$('.file-upload-image').attr('src', e.target.result);
+						$('.file-upload-content').show();
+
+						$('.image-title').html(input.files[0].name);
+					};
+
+					reader.readAsDataURL(input.files[0]);
+					init();
+				} else {
+					removeUpload();
+				}
+			}
+
+			function removeUpload() {
+				$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+				$('.file-upload-content').hide();
+				$('.image-upload-wrap').show();
+			}
+			$('.image-upload-wrap').bind('dragover', function () {
+				$('.image-upload-wrap').addClass('image-dropping');
+			});
+			$('.image-upload-wrap').bind('dragleave', function () {
+				$('.image-upload-wrap').removeClass('image-dropping');
+			});
+		</script>
+		<script type="text/javascript">
+			// More API functions here:
+			// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+			// the link to your model provided by Teachable Machine export panel
+			const URL = 'https://teachablemachine.withgoogle.com/models/MIc-ER1rV/';
+
+			let model, webcam, labelContainer, maxPredictions;
+
+			// Load the image model and setup the webcam
+			async function init() {
+				const modelURL = URL + 'model.json';
+				const metadataURL = URL + 'metadata.json';
+
+				// load the model and metadata
+				// Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+				// or files from your local hard drive
+				// Note: the pose library adds "tmImage" object to your window (window.tmImage)
+				model = await tmImage.load(modelURL, metadataURL);
+				maxPredictions = model.getTotalClasses();
+
+				labelContainer = document.getElementById('label-container');
+				for (let i = 0; i < maxPredictions; i++) {
+					// and class labels
+					labelContainer.appendChild(document.createElement('div'));
+				}
+			}
+
+			// run the webcam image through the image model
+			async function predict() {
+				// predict can take in an image, video or canvas html element
+				var image = document.getElementById('food-image');
+				const prediction = await model.predict(image, false);
+				if (
+					prediction[0].className == 'pork' &&
+					prediction[0].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '돈까스설명';
+				} else if (
+					prediction[1].className == 'strawberry' &&
+					prediction[1].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '딸기설명';
+				} else if (
+					prediction[2].className == 'ricecake' &&
+					prediction[2].probability.toFixed(2) >= 055
+				) {
+					labelContainer.childNodes[0].innerHTML = ' 떡볶이 설명';
+				} else if (
+					prediction[3].className == 'ramen' &&
+					prediction[3].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '라면 설명';
+				} else if (
+					prediction[4].className == 'soup' &&
+					prediction[4].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '미역국 설명';
+				} else if (
+					prediction[5].className == 'banana' &&
+					prediction[5].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '바나나 설명';
+				} else if (
+					prediction[6].className == 'grill' &&
+					prediction[6].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '볶음밥 설명';
+				} else if (
+					prediction[7].className == 'apple' &&
+					prediction[7].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '사과 설명';
+				} else if (
+					prediction[8].className == 'saladpasta' &&
+					prediction[8].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '샐러드파스타 설명';
+				} else if (
+					prediction[9].className == 'watermelon' &&
+					prediction[9].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '수박 설명';
+				} else if (
+					prediction[10].className == 'redchicken' &&
+					prediction[10].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '양념치킨 설명';
+				} else if (
+					prediction[11].className == 'orange' &&
+					prediction[11].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '오렌지 설명';
+				} else if (
+					prediction[12].className == 'curry' &&
+					prediction[12].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '카레 설명';
+				} else if (
+					prediction[13].className == 'creampasta' &&
+					prediction[13].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '크림파스타 설명';
+				} else if (
+					prediction[14].className == 'tomatopasta' &&
+					prediction[14].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '토마토파스타 설명';
+				} else if (
+					prediction[15].className == 'pineapple' &&
+					prediction[15].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '파인애플 설명';
+				} else if (
+					prediction[16].className == 'pizza' &&
+					prediction[16].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '피자 설명';
+				} else if (
+					prediction[17].className == 'hamburger' &&
+					prediction[17].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '햄버거 설명';
+				} else if (
+					prediction[18].className == 'originalchicken' &&
+					prediction[18].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '후라이드치킨 설명';
+				} else if (
+					prediction[19].className == 'beer' &&
+					prediction[19].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '맥주 설명';
+				} else if (
+					prediction[20].className == 'chocolate' &&
+					prediction[20].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '초콜릿 설명';
+				} else if (
+					prediction[21].className == 'cokecan' &&
+					prediction[21].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '캔콜라 설명';
+				} else if (
+					prediction[22].className == 'gimbob' &&
+					prediction[22].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '김밥 설명';
+				} else if (
+					prediction[23].className == 'hotsix' &&
+					prediction[23].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '핫식스 설명';
+				} else if (
+					prediction[24].className == 'icecream' &&
+					prediction[24].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '아이스크림 설명';
+				} else if (
+					prediction[25].className == 'milkis' &&
+					prediction[25].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '밀키스 설명';
+				} else if (
+					prediction[26].className == 'milk' &&
+					prediction[26].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '우유 설명';
+				} else if (
+					prediction[27].className == 'oreo' &&
+					prediction[27].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '오레오 설명';
+				} else if (
+					prediction[28].className == 'pigfoot' &&
+					prediction[28].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '족발 설명';
+				} else if (
+					prediction[29].className == 'pocari' &&
+					prediction[29].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '포카리 설명';
+				} else if (
+					prediction[30].className == 'pokachip' &&
+					prediction[30].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '포카칩 설명';
+				} else if (
+					prediction[31].className == 'powerade' &&
+					prediction[31].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '파워에이드 설명';
+				} else if (
+					prediction[32].className == 'sandwiches' &&
+					prediction[32].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '샌드위치 설명';
+				} else if (
+					prediction[33].className == 'soju' &&
+					prediction[33].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '소주 설명';
+				} else if (
+					prediction[34].className == 'sosage' &&
+					prediction[34].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '소세지 설명';
+				} else if (
+					prediction[35].className == 'sprite' &&
+					prediction[35].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '사이다 설명';
+				} else if (
+					prediction[36].className == 'welchs' &&
+					prediction[36].probability.toFixed(2) >= 0.55
+				) {
+					labelContainer.childNodes[0].innerHTML = '웰치스 설명';
+				} 
+				else {
+					labelContainer.childNodes[0].innerHTML = '음식을 갖다대어주세요';
+				}
+
+				// prediction.sort((a, b) => parseFloat(b.probability)- parseFloat(a.probability));
+				// console.log(prediction[0].classname);
+				// var resultMessage;
+
+				//  switch (prediction[0].classname) {
+				//  	case 'pork':
+				//  		resultMessage = "돈까스"
+				//  		break;
+				//  	case 'strawberry':
+				//  		resultMessage = "딸기"
+				//  		break;
+				//  	default:
+				//  		resultMessage = "ㅠㅠ"
+				//  }
+				// $('.result-message').html(resultMessage);
+
+				// for (let i = 0; i < maxPredictions; i++) {
+				// 	const classPrediction =
+				// 		prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
+				// 	labelContainer.childNodes[i].innerHTML = classPrediction;
+
+				// }
+			}
+		</script>
+	</body>
+	<!-- Copyright (c) 2020 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ -->
+</html>
